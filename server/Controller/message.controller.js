@@ -15,7 +15,7 @@ const allMessages = async (req, res) => {
 };
 
 const addMessage = async (req, res) => {
-  const { content, chatId, image } = req.body;
+  const { content, chatId, image, unRead } = req.body;
   if ((!content && !image) || !chatId) {
     console.log("Invalid data passed into request");
     return res.sendStatus(400);
@@ -25,6 +25,7 @@ const addMessage = async (req, res) => {
     content: content,
     chat: chatId,
     image,
+    unRead,
   };
 
   try {

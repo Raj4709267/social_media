@@ -19,6 +19,7 @@ import { getFriendDetailsFromChat } from "../../utils/commonFun/getFriendDetails
 import { useTheme } from "@emotion/react";
 import { getFormantedName } from "../../utils/commonFun/getFormatedName";
 import { getLimitedText } from "../../utils/commonFun/getLimitedText";
+import socket from "../../Config/socketio";
 
 const Sidebar = () => {
   const [selectedMenu, setSelectedMenu] = useState("");
@@ -51,7 +52,9 @@ const Sidebar = () => {
       ),
     },
   ];
+
   const handleSingleChat = (item) => {
+    // socket.emit("open chat", item._id, user.userId);
     dispatch(setCurrentChat(item));
     navigate(`/chat/${item._id}`);
   };
@@ -59,6 +62,7 @@ const Sidebar = () => {
   useEffect(() => {
     dispatch(getAllChats(user.token));
   }, [activeChats]);
+
   return (
     <Paper
       className="sidebar-container"
@@ -120,13 +124,29 @@ const Sidebar = () => {
                     )}
                   </Box>
                 </Box>
-                <Box textAlign={"left"}>
-                  <Typography>
-                    {item?.users &&
-                      getFormantedName(
-                        getFriendDetailsFromChat(item?.users, user).name
-                      )}
-                  </Typography>
+                <Box textAlign={"left"} width={"100%"}>
+                  <Box
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                  >
+                    <Typography>
+                      {item?.users &&
+                        getFormantedName(
+                          getFriendDetailsFromChat(item?.users, user).name
+                        )}
+                    </Typography>
+                    {/* {item.latestMessage?.unRead && (
+                      <Typography
+                        borderRadius={"50%"}
+                        // height={"10px"}
+                        // width={"10px"}
+                        backgroundColor="red"
+                      >
+                        New
+                      </Typography>
+                    )} */}
+                  </Box>
                   <Typography fontSize={"12px"}>
                     {getLimitedText(item.latestMessage?.content, 20)}
                   </Typography>

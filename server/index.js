@@ -9,6 +9,8 @@ const { messageRoute } = require("./Routes/message.routes");
 const { postRoutes } = require("./Routes/post.routes");
 const { commentRoutes } = require("./Routes/comment.routes");
 const { authentication } = require("./Middleware/Authentication");
+const { MessageModel } = require("./Model/messageModel");
+const { ChatModel } = require("./Model/chatModel");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -100,6 +102,34 @@ io.on("connection", (socket) => {
       socket.in(reciverId[0].socketId).emit("recived message", message);
     }
   });
+
+  // socket.on("open chat", async (chatId, userId) => {
+  //   try {
+  //     // Find all unread messages in the specified chat for the current user
+  //     const unreadMessages = await MessageModel.find({
+  //       chat: chatId,
+  //       sender: { $ne: userId }, // Exclude user's own messages
+  //       unRead: true,
+  //     });
+
+  //     // Mark all unread messages as read
+  //     for (const message of unreadMessages) {
+  //       message.unRead = false;
+  //       await message.save();
+  //     }
+
+  //     // Update the latestMessage field in the chat
+  //     await ChatModel.findByIdAndUpdate(chatId, {
+  //       latestMessage: unreadMessages[unreadMessages.length - 1]._id,
+  //     });
+
+  //     // Emit an event to notify the user that messages have been marked as read
+  //     socket.emit("messages marked as read");
+  //   } catch (error) {
+  //     // Handle errors
+  //     console.error("Error marking messages as read:", error);
+  //   }
+  // });
 
   //when user logout manually;
   socket.on("logout", () => {

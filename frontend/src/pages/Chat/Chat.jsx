@@ -122,6 +122,23 @@ const Chat = () => {
   // }, [socket]);
 
   useEffect(() => {
+    console.log("seggingglksdl");
+    console.log(socket.connected);
+    socket.emit("setup", user);
+
+    // socket.on("recived message", (kk) => {
+    //   console.log("message");
+    // });
+
+    socket.on("getActiveUsers", (activeUsers) => {
+      console.log(user.userId);
+      console.log("activeUsers", activeUsers);
+      const activeIds = activeUsers.map((item) => item.userId);
+      dispatch(setActiveChats(activeIds));
+    });
+  }, []);
+
+  useEffect(() => {
     currentChatIdRef.current = currentChat._id;
   }, [currentChat]);
 
