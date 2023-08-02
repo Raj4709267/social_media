@@ -1,0 +1,140 @@
+@import "../../index.css";
+
+.sidebar-container {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* position: fixed; */
+    height: 100vh;
+    border-right: 1px solid rgb(192, 192, 192);
+}
+
+.sidebar-logo-container p {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+
+.sidebar-container>div {
+    width: 100%;
+}
+
+
+
+.sidebar-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-logo-container img {
+    height: 50px;
+    margin: 20px;
+}
+
+
+
+.sidebar-menus-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-message-container {
+    /* height: calc(100vh - 250px); */
+    height: 70%;
+    overflow: scroll;
+    margin-top: 24px;
+    /* width: 90%; */
+}
+
+/* .sidebar-message-container {
+    overflow-x: hidden;
+} */
+
+.single-message-box {
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.single-message-box-selected {
+    padding: 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    width: 80%;
+    margin: auto;
+    /* background-color: var(--primary-background-dark); */
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.sidebar-menus-container:hover {
+    cursor: pointer;
+}
+
+
+.sidebar-link-container {
+    all: unset;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 15px 15px 40px;
+}
+
+.sidebar-link-container>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.sidebar-link-container svg {
+    font-size: 1.5rem;
+}
+
+
+
+
+.sidebar-link-selected svg {
+    color: var(--primary-color);
+}
+
+
+/* .sidebar-message-container:hover {} */
+
+::-webkit-scrollbar {
+    width: 1px;
+}
+
+::-webkit-scrollbar-track {
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: gray;
+    height: 40px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(47, 47, 47);
+}
+
+
+
+/* @media (min-width: 20px) and (max-width: 1200px) {
+    .sidebar-container {
+        display: none;
+    }
+} */

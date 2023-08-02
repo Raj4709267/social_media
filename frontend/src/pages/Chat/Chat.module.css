@@ -1,0 +1,28 @@
+.chat_container_main {
+    height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat_input_box {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+}
+
+
+
+.chat_input_box>div:first-child {
+    width: 100%;
+
+}
+
+.chat_input_box>div:last-child {
+    display: flex;
+}

@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+  display: flex;
+
+}
+
+/* .App>div {
+  border: 1px solid red;
+  width: 100%;
+} */
+
+.main-container {
+  width: calc(100vw - 300px);
+  margin: auto;
+  height: 100vh;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.main-body-container {
+  width: 90%;
+  margin: auto;
+  margin-top: 30px;
+}
+
+/* 1px solid #2a2b33 */
