@@ -11,6 +11,7 @@ import { Box, Paper } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { getFormantedName } from "../../utils/commonFun/getFormatedName";
 import UserProfileModal from "../ProfileModal/ProfileModal";
+import style from "./Navbar.module.css";
 
 const styles = {
   navbarContainer: {
@@ -88,9 +89,9 @@ const Navbar = () => {
       }}
     >
       <Box style={styles.navbarSearchContainer}>
-        {/* <MenuDrawer /> */}
+        <MenuDrawer />
         <SearchModal />
-        <p>Find Friends</p>
+        <Typography className={style.remove_element}>Find Friends</Typography>
       </Box>
       <Box style={styles.navbarContent}>
         <img
@@ -98,7 +99,10 @@ const Navbar = () => {
           alt="Display icon"
           style={{ borderRadius: "50%", height: "50px", width: "50px" }}
         />
-        <Typography style={{ fontSize: "20px", fontWeight: "bold" }}>
+        <Typography
+          className={style.remove_element}
+          style={{ fontSize: "20px", fontWeight: "bold" }}
+        >
           {getFormantedName(user.name)}
         </Typography>
         {/* IoCaretDownOutline Icon with onClick to open the menu */}

@@ -130,11 +130,3 @@
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(47, 47, 47);
 }
-
-
-
-/* @media (min-width: 20px) and (max-width: 1200px) {
-    .sidebar-container {
-        display: none;
-    }
-} */

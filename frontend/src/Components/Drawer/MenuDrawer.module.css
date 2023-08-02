@@ -1,0 +1,9 @@
+.menu_drawer {
+    display: none;
+}
+
+@media (min-width: 20px) and (max-width: 800px) {
+    .menu_drawer {
+        display: block;
+    }
+}

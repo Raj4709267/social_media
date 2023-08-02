@@ -2,17 +2,26 @@ import { createContext, useEffect, useRef, useState } from "react";
 
 export const ThemeContext = createContext();
 
+const chatAppSetting = JSON.parse(localStorage.getItem("chat-setting")) || {
+  dark: true,
+  color: 0,
+};
+
 const CustomThemeProvider = ({ children }) => {
-  const [dark, setDark] = useState(true);
-  const [color, setColor] = useState(0);
+  const [dark, setDark] = useState(chatAppSetting.dark);
+  const [color, setColor] = useState(chatAppSetting.color);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const handleChangeTheme = () => {
     setDark((pre) => !pre);
+    const obj = { ...chatAppSetting, dark: !chatAppSetting.dark };
+    localStorage.setItem("chat-setting", JSON.stringify(obj));
   };
 
   const handleChangeColor = (newColor) => {
     setColor(newColor);
+    const obj = { ...chatAppSetting, color: newColor };
+    localStorage.setItem("chat-setting", JSON.stringify(obj));
   };
 
   const enterFullScreen = () => {

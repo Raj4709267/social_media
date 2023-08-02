@@ -5,6 +5,7 @@ const initState = {
   chats: [],
   activeChats: [],
   messages: [],
+  isOpenDrawer: false,
 };
 
 function AppReducer(state = initState, action) {
@@ -45,6 +46,18 @@ function AppReducer(state = initState, action) {
         chats: [],
         activeChats: [],
         messages: [],
+      };
+    }
+    case types.OPEN_DRAWER: {
+      return {
+        ...state,
+        isOpenDrawer: true,
+      };
+    }
+    case types.CLOSE_DRAWER: {
+      return {
+        ...state,
+        isOpenDrawer: false,
       };
     }
     default:

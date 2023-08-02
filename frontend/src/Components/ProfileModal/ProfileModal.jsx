@@ -18,13 +18,14 @@ import { storage } from "../../firebase/config";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { baseURL } from "../../Config/CommonConfig";
+import style from "./ProfileModal.module.css";
 
-const style = {
+const profileStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "auto",
+  width: "500",
   bgcolor: "background.paper",
   boxShadow: 24,
   padding: "24px",
@@ -41,7 +42,7 @@ const UserProfileModal = ({ user, open, onClose }) => {
 
   const theme = useTheme();
   const dispatch = useDispatch();
-  // const { user } = useSelector((store) => store.AuthReducer);
+  const profileUser = useSelector((store) => store.AuthReducer.user);
   const handleImageLoad = () => {
     setImageLoaded(true);
     setShowLoading(false);
@@ -135,10 +136,14 @@ const UserProfileModal = ({ user, open, onClose }) => {
         sx: { backdropFilter: "blur(8px)" },
       }}
     >
-      <Box style={style} backgroundColor={theme.palette.background.paper}>
+      <Box
+        // style={profileStyle}
+        backgroundColor={theme.palette.background.paper}
+        className={style.profile_modal_container}
+      >
         {/* Close icon */}
         <IconButton
-          sx={{ position: "absolute", top: 0, right: 0 }}
+          sx={{ position: "absolute", top: 12, right: 12 }}
           onClick={() => {
             onClose();
             clearData();
@@ -147,7 +152,7 @@ const UserProfileModal = ({ user, open, onClose }) => {
           <AiOutlineClose />
         </IconButton>
 
-        <Box display={"flex"}>
+        <Box display={"flex"} className={style.content_container}>
           {/* Avatar */}
           <Box
             display={"flex"}
@@ -178,11 +183,13 @@ const UserProfileModal = ({ user, open, onClose }) => {
               style={{ display: "none" }}
               onChange={handleAvatarChange}
             />
-            <label htmlFor="avatar-upload">
-              <Button variant="contained" component="span">
-                Change Avatar
-              </Button>
-            </label>
+            {profileUser.userId === user.userId && (
+              <label htmlFor="avatar-upload">
+                <Button variant="contained" component="span">
+                  Change Avatar
+                </Button>
+              </label>
+            )}
           </Box>
           <Box
             textAlign={"left"}
@@ -202,14 +209,17 @@ const UserProfileModal = ({ user, open, onClose }) => {
                 <span style={{ fontWeight: "bold" }}>Email:</span> {user.email}
               </Typography>
             </Box>
-            <Box textAlign={"right"} onClick={handleUpdateChange}>
-              <Button
-                variant="contained"
-                disabled={uploadPercent < 100 || !avatarImage || showLoading}
-              >
-                {updateLoading ? "updating..." : "update"}
-              </Button>
-            </Box>
+            {profileUser.userId === user.userId && (
+              <Box textAlign={"right"}>
+                <Button
+                  variant="contained"
+                  disabled={uploadPercent < 100 || !avatarImage || showLoading}
+                  onClick={handleUpdateChange}
+                >
+                  {updateLoading ? "updating..." : "update"}
+                </Button>
+              </Box>
+            )}
           </Box>
         </Box>
       </Box>

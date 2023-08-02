@@ -32,7 +32,11 @@ function App() {
     >
       <CssBaseline />
       <Box className="App">
-        {isAuth ? <Sidebar /> : null}
+        {isAuth ? (
+          <Box className="sidebar_container">
+            <Sidebar />{" "}
+          </Box>
+        ) : null}
         <Box className="main-container">
           {isAuth ? <Navbar /> : null}
           <Box className="main-body-container">

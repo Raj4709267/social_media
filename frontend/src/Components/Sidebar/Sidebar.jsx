@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Box, Divider, Paper, Typography } from "@mui/material";
 import {
   clearChats,
+  closeDrawer,
   getAllChats,
   setCurrentChat,
 } from "../../Redux/AppReducer/action";
@@ -87,6 +88,7 @@ const Sidebar = () => {
                 onClick={() => {
                   handleSingleChat(item);
                   setSelectedMenu("");
+                  dispatch(closeDrawer());
                 }}
                 key={item._id}
                 backgroundColor={
@@ -180,6 +182,7 @@ const Sidebar = () => {
               onClick={() => {
                 setSelectedMenu(item.name, user);
                 dispatch(clearChats());
+                dispatch(closeDrawer());
               }}
             >
               {item.icon}

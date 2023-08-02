@@ -8,3 +8,5 @@ export const GETMESSAGE_FAILURE = "GETMESSAGE_FAILURE";
 export const SET_ACTIVE_CHATS = "SET_ACTIVE_CHATS";
 export const CLEAR_CHAT = "CLEAR_CHAT";
 export const LOGOUT = "LOGOUT";
+export const OPEN_DRAWER = "OPEN_DRAWER";
+export const CLOSE_DRAWER = "CLOSE_DRAWER";

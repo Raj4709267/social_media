@@ -19,6 +19,7 @@ import { getFormantedName } from "../../utils/commonFun/getFormatedName";
 import style from "./Chat.module.css";
 import { useTheme } from "@emotion/react";
 import ChatUI from "../../Components/ChatInput/ChatInput";
+import UserProfileModal from "../../Components/ProfileModal/ProfileModal";
 
 const Chat = () => {
   // const [message, setMessage] = useState("");
@@ -27,6 +28,7 @@ const Chat = () => {
   const [isMessageSending, setIsMessageSending] = useState(false);
   const [typing, setTyping] = useState(false);
   const [userTyping, setUserTyping] = useState("");
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
   const { currentChat, activeChats } = useSelector((store) => store.AppReducer);
   const { user } = useSelector((store) => store.AuthReducer);
@@ -112,6 +114,14 @@ const Chat = () => {
     }, 1000);
   };
 
+  const handleProfileModalClose = () => {
+    setShowProfileModal(false);
+  };
+
+  const handleProfileModalOpen = () => {
+    setShowProfileModal(true);
+  };
+
   // useEffect(() => {
   //   socket.on("getActiveUsers", (activeUsers) => {
   //     setSocketConnected(true);
@@ -186,12 +196,13 @@ const Chat = () => {
                 gap: "8px",
                 height: "50px",
                 borderBottom: theme.palette.border,
-                paddingBottom: "8px",
+                paddingBottom: "16px",
               }}
             >
               <Avatar
                 src={friendDetails.avatar}
-                sx={{ width: 48, height: 48 }}
+                sx={{ width: 48, height: 48, cursor: "pointer" }}
+                onClick={handleProfileModalOpen}
               />
               <Typography fontSize={"20px"} fontWeight={"bold"}>
                 {getFormantedName(friendDetails.name)}
@@ -244,6 +255,11 @@ const Chat = () => {
               </Box>
             </Box>
           </Box>
+          <UserProfileModal
+            user={friendDetails}
+            open={showProfileModal}
+            onClose={handleProfileModalClose}
+          />
         </>
       ) : (
         <div>select any chat</div>

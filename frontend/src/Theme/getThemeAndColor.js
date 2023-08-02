@@ -11,6 +11,16 @@ export const colorPresets = [
     dark: "#1565c0",
     contrastText: "#fff",
   },
+  // GREEN (Chat App Primary Color)
+  {
+    name: "green",
+    lighter: "#D0FFD1",
+    light: "#76F276",
+    main: "#00B200",
+    dark: "#008B00",
+    darker: "#005A00",
+    contrastText: "#fff",
+  },
   // PURPLE
   {
     name: "purple",
@@ -21,24 +31,33 @@ export const colorPresets = [
     darker: "#200A69",
     contrastText: "#fff",
   },
-  // CYAN
+  // TEAL
   {
-    name: "cyan",
-    lighter: "#D1FFFC",
-    light: "#76F2FF",
-    main: "#1CCAFF",
-    dark: "#0E77B7",
-    darker: "#053D7A",
+    name: "teal",
+    lighter: "#D2F7F7",
+    light: "#79E2E2",
+    main: "#00B7B7",
+    dark: "#008080",
+    darker: "#004D4D",
   },
-  // BLUE
+  // PINK
   {
-    name: "blue",
-    lighter: "#D1E9FC",
-    light: "#76B0F1",
-    main: "#2065D1",
-    dark: "#103996",
-    darker: "#061B64",
-
+    name: "pink",
+    lighter: "#FFD7E5",
+    light: "#FF89A8",
+    main: "#FF2D55",
+    dark: "#B31E4D",
+    darker: "#7A1036",
+    contrastText: "#fff",
+  },
+  // RED
+  {
+    name: "red",
+    lighter: "#FFE3D5",
+    light: "#FFC1AC",
+    main: "#FF3030",
+    dark: "#B71833",
+    darker: "#7A0930",
     contrastText: "#fff",
   },
   // ORANGE
@@ -50,14 +69,14 @@ export const colorPresets = [
     dark: "#B66816",
     darker: "#793908",
   },
-  // RED
+  // INDIGO
   {
-    name: "red",
-    lighter: "#FFE3D5",
-    light: "#FFC1AC",
-    main: "#FF3030",
-    dark: "#B71833",
-    darker: "#7A0930",
+    name: "indigo",
+    lighter: "#D5E5FF",
+    light: "#91A7FF",
+    main: "#3F51B5",
+    dark: "#1A237E",
+    darker: "#0D47A1",
     contrastText: "#fff",
   },
 ];

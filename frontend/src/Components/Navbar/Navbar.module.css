@@ -1,0 +1,5 @@
+@media (min-width: 20px) and (max-width: 800px) {
+    .remove_element {
+        display: none;
+    }
+}

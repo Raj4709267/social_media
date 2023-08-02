@@ -11,18 +11,6 @@ import axios from "axios";
 import { createChat } from "../../Redux/AppReducer/action";
 import { useTheme } from "@emotion/react";
 
-const style = {
-  position: "absolute",
-  top: "30%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: "8px",
-};
-
 export default function SearchModal() {
   const [open, setOpen] = React.useState(false);
   const [searchText, setSearchText] = React.useState("");
@@ -86,7 +74,10 @@ export default function SearchModal() {
           sx: { backdropFilter: "blur(8px)" },
         }}
       >
-        <Box sx={style}>
+        <Box
+          backgroundColor={theme.palette.background.paper}
+          className="search_modal_container"
+        >
           <Typography textAlign={"right"}>
             <IoCloseOutline
               fontSize={"2rem"}

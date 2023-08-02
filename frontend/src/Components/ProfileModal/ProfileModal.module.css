@@ -1,0 +1,40 @@
+.profile_modal_container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500;
+    box-shadow: 24;
+    padding: 24px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+@media (min-width: 20px) and (max-width: 500px) {
+    .profile_modal_container {
+        width: 300px;
+
+    }
+
+    .content_container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .content_container>div {
+        padding: 0;
+        margin-top: 24px;
+        border: none;
+    }
+
+    .content_container p,
+    h6 {
+        text-align: center;
+
+    }
+
+    .content_container p {
+        margin-bottom: 12px;
+    }
+}

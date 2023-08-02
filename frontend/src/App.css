@@ -20,7 +20,17 @@
 .main-body-container {
   width: 90%;
   margin: auto;
-  margin-top: 30px;
+  margin-top: 20px;
+}
+
+@media (min-width: 20px) and (max-width: 800px) {
+  .sidebar_container {
+    display: none;
+  }
+
+  .main-container {
+    width: 100vw;
+  }
 }
 
 /* 1px solid #2a2b33 */

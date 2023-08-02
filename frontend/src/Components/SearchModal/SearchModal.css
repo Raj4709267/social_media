@@ -1,5 +1,5 @@
 .search-result-container {
-    height: 20vh;
+    height: 30vh;
     overflow: scroll;
 
     /* width: 90%; */
@@ -44,3 +44,20 @@
 ::-webkit-scrollbar-thumb:hover {
     background: none;
 } */
+.search_modal_container {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    box-shadow: 24px;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+@media (min-width: 20px) and (max-width: 500px) {
+    .search_modal_container {
+        width: 300px;
+    }
+
+}

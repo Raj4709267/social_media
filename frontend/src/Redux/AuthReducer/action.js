@@ -30,6 +30,6 @@ export const signinUser = (payload) => (dispatch) => {
 };
 
 export const userLogout = (paylaod) => (dispatch) => {
-  localStorage.clear("chatapp_user_details");
+  localStorage.removeItem("chatapp_user_details");
   dispatch({ type: types.LOGOUT_SUCCESS });
 };

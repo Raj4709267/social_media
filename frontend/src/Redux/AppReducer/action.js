@@ -47,6 +47,13 @@ const clearChats = () => {
   return { type: types.CLEAR_CHAT };
 };
 
+const openDrawer = () => {
+  return { type: types.OPEN_DRAWER };
+};
+const closeDrawer = () => {
+  return { type: types.CLOSE_DRAWER };
+};
+
 const createChat = (payload, token) => async (dispatch) => {
   try {
     const config = {
@@ -115,4 +122,6 @@ export {
   setActiveChats,
   getMessages,
   sendMessage,
+  openDrawer,
+  closeDrawer,
 };
