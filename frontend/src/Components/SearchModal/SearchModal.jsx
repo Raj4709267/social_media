@@ -60,7 +60,9 @@ export default function SearchModal() {
   }, [open]);
 
   React.useEffect(() => {
-    navigate(`/chat/${currentChat._id}`);
+    if (currentChat._id) {
+      navigate(`/chat/${currentChat._id}`);
+    }
   }, [currentChat]);
   return (
     <div>
