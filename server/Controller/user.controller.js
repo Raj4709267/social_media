@@ -6,7 +6,6 @@ var jwt = require("jsonwebtoken");
 const findUsers = async (req, res) => {
   const query = req.query.search;
   const { userId } = req.body;
-  console.log(userId);
   try {
     const data = await UserModel.find({
       $and: [
@@ -29,7 +28,6 @@ const findUsers = async (req, res) => {
 
 const loginUsers = async (req, res) => {
   const payload = req.body;
-  console.log(payload);
   const userDetails = await UserModel.findOne({ email: payload.email });
   if (!userDetails) {
     res.status(400).send({ message: "Invalid credentials." });
@@ -72,7 +70,6 @@ const loginUsers = async (req, res) => {
 
 const signupUsers = async (req, res) => {
   const isEmailPresent = await UserModel.findOne({ email: req.body.email });
-  console.log(req.body);
   if (isEmailPresent) {
     res.status(400).send({ message: "Email already registered." });
   } else {
@@ -91,7 +88,6 @@ const signupUsers = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const userId = req.body.userId; // Extract the userId from the authenticated user (using middleware)
   const avatarUrl = req.body.avatarUrl; // New avatar URL sent in the request body
-  console.log(userId, avatarUrl);
   try {
     // Find the user by their userId
     const user = await UserModel.findOne({ _id: userId });

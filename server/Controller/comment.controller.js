@@ -11,7 +11,9 @@ const getComments = async (req, res) => {
     res.send(result);
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: "Something went wrong. Try again" });
+    res
+      .status(400)
+      .json({ message: "Something went wrong. Try again", error: err });
   }
 };
 
@@ -28,7 +30,9 @@ const addComments = async (req, res) => {
     res.send({ message: "Success" });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: "Something went wrong. Try again" });
+    res
+      .status(400)
+      .json({ message: "Something went wrong. Try again", error: err });
   }
 };
 

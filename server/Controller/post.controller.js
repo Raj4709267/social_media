@@ -2,8 +2,6 @@ const { CommentModel } = require("../Model/commentModel");
 const { PostModel } = require("../Model/postModel");
 
 const getAllPost = async (req, res) => {
-  console.log("kk");
-  console.log(req.body);
   try {
     const result = await PostModel.aggregate([
       {
@@ -38,7 +36,9 @@ const getAllPost = async (req, res) => {
     res.send(result);
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: "Something went wrong. Try again" });
+    res
+      .status(400)
+      .json({ message: "Something went wrong. Try again", error: err });
   }
 };
 
@@ -52,7 +52,9 @@ const addPost = async (req, res) => {
       const result = await PostModel.create(payload);
       res.send({ message: "Post created successfully." });
     } catch (err) {
-      res.status(400).json({ message: "Something went wrong. Try again" });
+      res
+        .status(400)
+        .json({ message: "Something went wrong. Try again", error: err });
     }
   }
 };
@@ -60,14 +62,14 @@ const addPost = async (req, res) => {
 const deletePost = async (req, res) => {
   const { postId, userId } = req.body;
 
-  console.log(postId, userId);
   try {
     const result = await PostModel.deleteOne({ _id: postId, user: userId });
-    console.log(result);
     res.send({ message: "Success" });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: "Something went wrong. Try again" });
+    res
+      .status(400)
+      .json({ message: "Something went wrong. Try again", error: err });
   }
 };
 
@@ -77,7 +79,6 @@ const postLike = async (req, res) => {
     _id: postId,
     $includes: { likes: userId },
   });
-  console.log(alreadyLiked);
   let query = { $push: { likes: userId } };
   if (alreadyLiked.likes.includes(userId)) {
     query = { $pull: { likes: userId } };
@@ -87,7 +88,9 @@ const postLike = async (req, res) => {
     res.send({ message: "Success" });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: "Something went wrong. Try again" });
+    res
+      .status(400)
+      .json({ message: "Something went wrong. Try again", error: err });
   }
 };
 
