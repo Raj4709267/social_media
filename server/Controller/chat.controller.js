@@ -23,9 +23,7 @@ const createChat = async (req, res) => {
     const chatData = { users: [userId, friendUserId] };
     try {
       const createdChat = await ChatModel.create(chatData);
-      const FullChat = await ChatModel.findOne({
-        userId: createdChat.userId,
-      }).populate("users", "-password");
+      const FullChat = await createdChat.populate("users", "-password");
       res.status(200).json(FullChat);
     } catch (error) {
       res.status(400);

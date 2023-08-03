@@ -62,6 +62,7 @@ const createChat = (payload, token) => async (dispatch) => {
       },
     };
     let res = await axios.post(`${baseURL}/chat/create`, payload, config);
+    dispatch(setCurrentChat(res.data));
     dispatch(getAllChats(token));
   } catch (err) {
     console.log(err);

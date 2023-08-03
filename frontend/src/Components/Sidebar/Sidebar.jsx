@@ -166,7 +166,11 @@ const Sidebar = ({ fromDrawer }) => {
             );
           })
         ) : (
-          <div>No Chats</div>
+          <Box>
+            <Typography textAlign={"center"} fontWeight={"bold"}>
+              No Chats
+            </Typography>
+          </Box>
         )}
       </div>
 

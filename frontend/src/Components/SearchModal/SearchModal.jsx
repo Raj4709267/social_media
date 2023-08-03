@@ -10,6 +10,7 @@ import { baseURL } from "../../Config/CommonConfig";
 import axios from "axios";
 import { createChat } from "../../Redux/AppReducer/action";
 import { useTheme } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchModal() {
   const [open, setOpen] = React.useState(false);
@@ -18,7 +19,8 @@ export default function SearchModal() {
   const [resultUsers, setResultUsers] = React.useState([]);
   const dispatch = useDispatch();
   const theme = useTheme();
-
+  const { currentChat } = useSelector((store) => store.AppReducer);
+  const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -56,6 +58,10 @@ export default function SearchModal() {
       handleSearch();
     }
   }, [open]);
+
+  React.useEffect(() => {
+    navigate(`/chat/${currentChat._id}`);
+  }, [currentChat]);
   return (
     <div>
       <div onClick={handleOpen}>
