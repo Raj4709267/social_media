@@ -1,0 +1,8 @@
+.logoContainer {
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 32px;
+
+}

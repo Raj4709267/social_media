@@ -1,5 +1,5 @@
 import { Button, Drawer, IconButton } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import style from "./MenuDrawer.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,10 @@ const MenuDrawer = () => {
 
   // const toggleDrawer = (value) => {
   //   setOpen(value);
-  // };
+  // };\
+  useEffect(() => {
+    console.log("collingina df");
+  }, []);
   const dispatch = useDispatch();
   const { isOpenDrawer } = useSelector((store) => store.AppReducer);
   return (
@@ -24,7 +27,7 @@ const MenuDrawer = () => {
         open={isOpenDrawer}
         onClose={() => dispatch(closeDrawer())}
       >
-        <Sidebar />
+        <Sidebar fromDrawer={true} />
       </Drawer>
     </div>
   );

@@ -26,3 +26,18 @@
 .chat_input_box>div:last-child {
     display: flex;
 }
+
+.welcome_message {
+    margin-top: 100px;
+}
+
+.welcome_message p {
+    font-size: 32px;
+}
+
+.welcome_message>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 52px;
+}

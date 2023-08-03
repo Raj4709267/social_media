@@ -21,8 +21,9 @@ import { useTheme } from "@emotion/react";
 import { getFormantedName } from "../../utils/commonFun/getFormatedName";
 import { getLimitedText } from "../../utils/commonFun/getLimitedText";
 import socket from "../../Config/socketio";
+import Logo from "../Logo/Logo";
 
-const Sidebar = () => {
+const Sidebar = ({ fromDrawer }) => {
   const [selectedMenu, setSelectedMenu] = useState("");
 
   const { user } = useSelector((store) => store.AuthReducer);
@@ -37,6 +38,7 @@ const Sidebar = () => {
     {
       name: "Feed",
       path: "/feed",
+      className: "feed",
       icon: (
         <IoHomeSharp
           color={selectedMenu === "Feed" ? theme.palette.primary.main : ""}
@@ -46,6 +48,7 @@ const Sidebar = () => {
     {
       name: "Settings",
       path: "/settings",
+      className: "setting",
       icon: (
         <IoSettingsSharp
           color={selectedMenu === "Settings" ? theme.palette.primary.main : ""}
@@ -61,7 +64,10 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllChats(user.token));
+    if (!fromDrawer) {
+      console.log("get users");
+      dispatch(getAllChats(user.token));
+    }
   }, [activeChats]);
 
   return (
@@ -70,8 +76,11 @@ const Sidebar = () => {
       style={{ boxShadow: "none", borderRight: theme.palette.border }}
     >
       <div>
-        <div className="sidebar-logo-container">
-          <img src="/logo.png" />
+        <div
+          className="sidebar-logo-container"
+          style={{ borderBottom: theme.palette.border }}
+        >
+          <Logo />
         </div>
       </div>
       <Divider />
@@ -161,7 +170,12 @@ const Sidebar = () => {
         )}
       </div>
 
-      <div className="sidebar-menus-container">
+      <div
+        className="sidebar-menus-container"
+        style={{
+          borderTop: theme.palette.border,
+        }}
+      >
         {optionsMenus?.map((item, i) => {
           return (
             <Link

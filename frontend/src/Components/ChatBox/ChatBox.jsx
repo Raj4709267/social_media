@@ -47,7 +47,7 @@ const ChatBox = ({ messages, typing, userTyping }) => {
         borderRadius: "5px",
       }}
     >
-      <Typography
+      <Box
         backgroundColor="#fef1bd"
         color="black"
         width={"fit-content"}
@@ -55,13 +55,14 @@ const ChatBox = ({ messages, typing, userTyping }) => {
         borderRadius={"8px"}
         margin="auto"
         marginBottom={"20px"}
-        display={"flex"}
-        alignItems={"center"}
-        gap={"8px"}
       >
-        <HiLockClosed />
-        Messages you send to this chat are secure.
-      </Typography>
+        <Typography>
+          <span style={{ marginRight: "4px" }}>
+            <HiLockClosed />
+          </span>
+          <span>Messages you send to this chat are secure.</span>
+        </Typography>
+      </Box>
 
       {messages.map((message, index) => (
         <Box key={index}>

@@ -1,0 +1,14 @@
+.chat_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+
+
+@media (min-width: 20px) and (max-width: 1250px) {
+    .setting_component {
+        display: none;
+    }
+
+}

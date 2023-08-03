@@ -1,5 +1,13 @@
-.gradient_text {
-    background: linear-gradient(to right, #ff00ff, #00ffff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.authentication_container {
+    width: 400px;
+}
+
+/* Logo.module.css */
+
+
+
+@media (min-width: 20px) and (max-width: 500px) {
+    .authentication_container {
+        width: 300px;
+    }
 }

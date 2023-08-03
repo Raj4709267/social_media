@@ -1,9 +1,11 @@
-import { Box, Button, Switch } from "@mui/material";
+import { Box, Button, Paper, Switch, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { ThemeContext } from "../../Context/SettingContext";
 import { colorPresets } from "../../Theme/getThemeAndColor";
+import { useTheme } from "@emotion/react";
 
 const Setting = () => {
+  const theme = useTheme();
   const {
     handleChangeColor,
     handleChangeTheme,
@@ -13,8 +15,24 @@ const Setting = () => {
     color,
     dark,
   } = useContext(ThemeContext);
+  const styles = {
+    height: "fit-content",
+    padding: "8px",
+    position: "sticky",
+    top: "80px",
+    boxShadow: "none",
+  };
   return (
-    <Box>
+    <Paper
+      style={{
+        ...styles,
+        backgroundColor: theme.palette.background.paper,
+        border: theme.palette.border,
+      }}
+    >
+      <Typography fontWeight={"bold"} marginBottom={"16px"} marginTop={"12px"}>
+        Settings
+      </Typography>
       <Box
         style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}
       >
@@ -55,7 +73,7 @@ const Setting = () => {
           />
         ))}
       </Box>
-    </Box>
+    </Paper>
   );
 };
 

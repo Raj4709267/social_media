@@ -1,0 +1,15 @@
+.comment_modal_container {
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    box-shadow: 24;
+}
+
+@media (min-width: 20px) and (max-width: 600px) {
+    .comment_modal_container {
+        width: 300px;
+    }
+}

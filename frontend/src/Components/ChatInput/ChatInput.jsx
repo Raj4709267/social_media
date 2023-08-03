@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   IconButton,
@@ -22,6 +22,8 @@ import {
 } from "react-icons/ri";
 import { storage } from "../../firebase/config";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { MdSend } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const ChatUI = ({ handleSendMessage, isMessageSending, handleTyping }) => {
   const [message, setMessage] = useState("");
@@ -30,6 +32,8 @@ const ChatUI = ({ handleSendMessage, isMessageSending, handleTyping }) => {
   const [uploadPercent, setUploadPercent] = useState(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false); // State to track image loading
   const [imageAdded, setImageAdded] = useState(false);
+
+  const { currentChat } = useSelector((store) => store.AppReducer);
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
@@ -83,7 +87,10 @@ const ChatUI = ({ handleSendMessage, isMessageSending, handleTyping }) => {
   const handleImageLoad = () => {
     setIsImageLoaded(true); // Update state when the image is fully loaded
   };
-
+  useEffect(() => {
+    setMessage("");
+    handleRemoveImage();
+  }, [currentChat]);
   return (
     <>
       {/* Input field for text message */}
@@ -131,7 +138,7 @@ const ChatUI = ({ handleSendMessage, isMessageSending, handleTyping }) => {
           {isMessageSending ? (
             <CircularProgress size={24} />
           ) : (
-            <RiSendPlaneLine size={"20px"} />
+            <MdSend size={"20px"} />
           )}
         </Button>
       </Box>

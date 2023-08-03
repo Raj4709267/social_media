@@ -20,6 +20,7 @@ import style from "./Chat.module.css";
 import { useTheme } from "@emotion/react";
 import ChatUI from "../../Components/ChatInput/ChatInput";
 import UserProfileModal from "../../Components/ProfileModal/ProfileModal";
+import Logo from "../../Components/Logo/Logo";
 
 const Chat = () => {
   // const [message, setMessage] = useState("");
@@ -150,6 +151,7 @@ const Chat = () => {
 
   useEffect(() => {
     currentChatIdRef.current = currentChat._id;
+    setMessages([]);
   }, [currentChat]);
 
   useEffect(() => {
@@ -262,7 +264,10 @@ const Chat = () => {
           />
         </>
       ) : (
-        <div>select any chat</div>
+        <Box className={style.welcome_message}>
+          <Typography>Welcome to</Typography>
+          <Logo />
+        </Box>
       )}
     </div>
   );

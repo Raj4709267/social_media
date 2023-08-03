@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { baseURL } from "../../Config/CommonConfig";
 import style from "./ProfileModal.module.css";
+import { generateLowerQualityImage } from "./resize";
 
 const profileStyle = {
   position: "absolute",
@@ -43,6 +44,7 @@ const UserProfileModal = ({ user, open, onClose }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const profileUser = useSelector((store) => store.AuthReducer.user);
+
   const handleImageLoad = () => {
     setImageLoaded(true);
     setShowLoading(false);
@@ -160,7 +162,11 @@ const UserProfileModal = ({ user, open, onClose }) => {
             justifyContent={"center"}
             alignItems={"center"}
             borderRight={theme.palette.border}
-            padding={"24px 24px 0 0"}
+            padding={
+              profileUser.userId === user.userId
+                ? "24px 24px 0 0"
+                : "0 24px 0 0 0"
+            }
             gap={"24px"}
           >
             <img
@@ -193,7 +199,11 @@ const UserProfileModal = ({ user, open, onClose }) => {
           </Box>
           <Box
             textAlign={"left"}
-            padding={"24px 0 0 24px "}
+            padding={
+              profileUser.userId === user.userId
+                ? "24px 0 0 24px "
+                : "0 0 0 24px"
+            }
             display={"flex"}
             flexDirection={"column"}
             justifyContent={"space-between"}

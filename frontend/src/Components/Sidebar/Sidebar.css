@@ -28,8 +28,14 @@
 .sidebar-logo-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    height: 70px;
 }
+
+.sidebar-logo-container>div {
+    font-size: 36px;
+}
+
 
 .sidebar-logo-container img {
     height: 50px;
@@ -45,10 +51,11 @@
 
 .sidebar-message-container {
     /* height: calc(100vh - 250px); */
-    height: 70%;
+    height: 100%;
     overflow: scroll;
-    margin-top: 24px;
+    /* margin-top: 24px; */
     /* width: 90%; */
+    padding: 24px 0;
 }
 
 /* .sidebar-message-container {
@@ -129,4 +136,16 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(47, 47, 47);
+}
+
+.sidebar-menus-container>a:nth-child(2) {
+    display: none;
+}
+
+
+@media (min-width: 20px) and (max-width: 1250px) {
+    .sidebar-menus-container>a:nth-child(2) {
+        display: flex;
+    }
+
 }

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { signinUser, signupUser } from "../../Redux/AuthReducer/action";
 import CircularProgress from "@mui/material/CircularProgress";
+import ErrorPopup from "../ErrorPopup/ErrorPopup";
 
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
@@ -12,9 +13,12 @@ const SignUpForm = () => {
     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
   );
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((store) => store.AuthReducer);
+  const { isLoading, errorMessage, message } = useSelector(
+    (store) => store.AuthReducer
+  );
 
   const handleSignUp = (e) => {
+    dispatch({ type: "CLEAR_MESSAGES" });
     e.preventDefault();
     // Perform sign-up logic here
     let payload = {
@@ -56,10 +60,27 @@ const SignUpForm = () => {
         margin="normal"
         required={true}
       />
-      <Button type="submit" variant="contained" color="primary">
-        {isLoading ? <CircularProgress color="inherit" size="20px" /> : null}
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        sx={{ width: "100%", marginTop: "24px" }}
+        startIcon={
+          isLoading ? <CircularProgress color="inherit" size="20px" /> : null
+        }
+      >
         Sign Up
       </Button>
+      {errorMessage && !message && (
+        <Typography color={"red"} textAlign={"center"} marginTop={"4px"}>
+          {errorMessage}
+        </Typography>
+      )}
+      {message && !errorMessage && (
+        <Typography color={"green"} textAlign={"center"} marginTop={"4px"}>
+          {message}
+        </Typography>
+      )}
     </form>
   );
 };
@@ -68,9 +89,9 @@ const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((store) => store.AuthReducer);
+  const { isLoading, errorMessage } = useSelector((store) => store.AuthReducer);
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     // Perform sign-in logic here
     const payload = { email, password };
@@ -98,10 +119,22 @@ const SignInForm = () => {
         margin="normal"
         required={true}
       />
-      <Button type="submit" variant="contained" color="primary">
-        {isLoading ? <CircularProgress color="inherit" size="20px" /> : null}
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        sx={{ width: "100%", marginTop: "24px" }}
+        startIcon={
+          isLoading ? <CircularProgress color="inherit" size="20px" /> : null
+        }
+      >
         Sign In
       </Button>
+      {errorMessage && (
+        <Typography color={"red"} textAlign={"center"} marginTop={"4px"}>
+          {errorMessage}
+        </Typography>
+      )}
     </form>
   );
 };

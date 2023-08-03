@@ -3,8 +3,8 @@ import { createContext, useEffect, useRef, useState } from "react";
 export const ThemeContext = createContext();
 
 const chatAppSetting = JSON.parse(localStorage.getItem("chat-setting")) || {
-  dark: true,
-  color: 0,
+  dark: false,
+  color: 2,
 };
 
 const CustomThemeProvider = ({ children }) => {

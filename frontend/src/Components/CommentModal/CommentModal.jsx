@@ -7,6 +7,7 @@ import {
   Backdrop,
   Box,
   Button,
+  CircularProgress,
   IconButton,
   InputBase,
   Modal,
@@ -21,16 +22,8 @@ import { baseURL } from "../../Config/CommonConfig";
 import { getFirstName } from "../../utils/commonFun/getFirstName";
 import { AiOutlineClose } from "react-icons/ai";
 import { RiSendPlaneLine } from "react-icons/ri";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-};
+import { MdSend } from "react-icons/md";
+import styles from "./CommentModal.module.css";
 
 const postButtonStyle = {
   marginLeft: "auto",
@@ -60,6 +53,7 @@ const CommentModal = ({
 }) => {
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
+  const [sendingComments, setSendingComments] = useState(false);
 
   const { user } = useSelector((store) => store.AuthReducer);
   const theme = useTheme();
@@ -81,7 +75,7 @@ const CommentModal = ({
     if (commentText.trim() === "") {
       return; // Don't add empty comments
     }
-
+    setSendingComments(true);
     const newComment = {
       content: commentText.trim(),
       commenterId: user.userId, // Replace with the actual user who commented
@@ -98,9 +92,11 @@ const CommentModal = ({
       .post(`${baseURL}/comment/add`, newComment, config)
       .then((res) => {
         getAllComments();
+        setSendingComments(false);
       })
       .catch((err) => {
         console.log(err);
+        setSendingComments(false);
       });
 
     setCommentText("");
@@ -167,7 +163,10 @@ const CommentModal = ({
           sx: { backdropFilter: "blur(8px)" },
         }}
       >
-        <Box sx={style}>
+        <Box
+          backgroundColor={theme.palette.background.paper}
+          className={styles.comment_modal_container}
+        >
           {/* Top fixed section */}
           <Box
             position="sticky"
@@ -275,7 +274,7 @@ const CommentModal = ({
                 style={postButtonStyle}
                 onClick={handleCommentSubmit}
               >
-                <RiSendPlaneLine />
+                {!sendingComments ? <MdSend /> : <CircularProgress size={16} />}
               </IconButton>
             </Box>
           </Box>

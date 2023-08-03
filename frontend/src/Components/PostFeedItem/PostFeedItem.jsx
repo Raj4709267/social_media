@@ -9,19 +9,12 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { FaEllipsisV } from "react-icons/fa"; // Import additional icons
 import { PiThumbsUpLight, PiThumbsUpFill } from "react-icons/pi";
-import {
-  Box,
-  Divider,
-  Modal,
-  Paper,
-  Menu,
-  MenuItem,
-  IconButton,
-} from "@mui/material";
+import { Box, Paper, Menu, MenuItem, IconButton } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import CommentModal from "../CommentModal/CommentModal";
 import { getFirstName } from "../../utils/commonFun/getFirstName";
 import DeleteConfirmationModal from "../DeleteModal/DeleteModal";
+import styles from "./PostFeedItem.module.css";
 
 const postHeaderStyle = {
   display: "flex",
@@ -124,7 +117,7 @@ const PostFeedItem = ({ post, handleLikePost, setRefetchPost, fromModal }) => {
             <Typography
               variant="subtitle1"
               fontSize={"18px"}
-              style={{ marginBottom: "-8px" }}
+              style={{ marginBottom: "-8px", textAlign: "left" }}
             >
               {getFirstName(post.user.name)}
             </Typography>
@@ -174,14 +167,27 @@ const PostFeedItem = ({ post, handleLikePost, setRefetchPost, fromModal }) => {
       {post.file && (
         <Box
           width={"100%"}
-          height={fromModal ? "300px" : "400px"}
+          // height={fromModal ? "300px" : "400px"}
           style={{ borderRadius: "8px" }}
+          className={
+            fromModal
+              ? styles.post_file_container_modal
+              : styles.post_file_container
+          }
         >
           <img
             style={{ objectFit: "contain", width: "100%", height: "100%" }}
             src={post.file}
             alt="Post"
           />
+          {/* <LazyLoadImage
+            // effect="blur"
+            style={{ objectFit: "contain", width: "100%", height: "100%" }}
+            alt={post.file}
+            height="200px"
+            src={post.file} // use normal <img> attributes as props
+            width={"200px"}
+          /> */}
         </Box>
       )}
 

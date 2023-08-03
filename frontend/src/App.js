@@ -9,6 +9,7 @@ import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { ThemeContext } from "./Context/SettingContext";
 import getThemeAndColor from "./Theme/getThemeAndColor";
+import Setting from "./pages/Setting/Setting";
 
 // const lightTheme = createTheme(themes.light);
 // const darkTheme = createTheme(themes.dark);

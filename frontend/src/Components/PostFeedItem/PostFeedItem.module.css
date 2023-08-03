@@ -1,0 +1,19 @@
+.post_file_container {
+    height: 400px;
+}
+
+.post_file_container_modal {
+    height: 300px;
+}
+
+@media (min-width: 20px) and (max-width: 500px) {
+
+
+    .post_file_container {
+        height: 300px;
+    }
+
+    .post_file_container_modal {
+        height: 250px;
+    }
+}

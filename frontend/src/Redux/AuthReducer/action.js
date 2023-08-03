@@ -11,13 +11,16 @@ export const signupUser = (payload) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
-      dispatch({ type: types.AUTH_FAILIURE });
+      dispatch({
+        type: types.AUTH_FAILIURE,
+        payload: err.response.data.message,
+      });
     });
 };
 
 export const signinUser = (payload) => (dispatch) => {
   dispatch({ type: types.AUTH_REQUEST });
-  axios
+  return axios
     .post(`${baseURL}/users/login`, payload)
     .then((res) => {
       dispatch({ type: types.LOGIN_SUCCESS, payload: res.data });
@@ -25,7 +28,10 @@ export const signinUser = (payload) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
-      dispatch({ type: types.AUTH_FAILIURE });
+      dispatch({
+        type: types.AUTH_FAILIURE,
+        payload: err.response.data.message,
+      });
     });
 };
 
