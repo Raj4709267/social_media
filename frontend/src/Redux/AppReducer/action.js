@@ -70,6 +70,7 @@ const createChat = (payload, token) => async (dispatch) => {
 };
 
 const getAllChats = (token) => async (dispatch) => {
+  dispatch({ type: types.GETCHAT_REQUEST });
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -80,6 +81,7 @@ const getAllChats = (token) => async (dispatch) => {
     dispatch(getChatSuccess(res.data));
   } catch (err) {
     console.log(err);
+    dispatch({ type: types.GETCHAT_FAILURE });
   }
 };
 

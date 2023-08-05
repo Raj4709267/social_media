@@ -27,6 +27,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [socketConnected, setSocketConnected] = useState(false);
   const [isMessageSending, setIsMessageSending] = useState(false);
+  const [isMessageLoading, setIsMessageLoading] = useState(false);
   const [typing, setTyping] = useState(false);
   const [userTyping, setUserTyping] = useState("");
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -83,6 +84,7 @@ const Chat = () => {
   };
 
   const getMessages = async (token, chatId) => {
+    setIsMessageLoading(true);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -93,8 +95,10 @@ const Chat = () => {
       dispatch(getAllChats(user.token));
       setMessages(res.data);
       setIsMessageSending(false);
+      setIsMessageLoading(false);
     } catch (err) {
       console.log(err);
+      setIsMessageLoading(false);
       setIsMessageSending(false);
     }
   };
@@ -233,6 +237,7 @@ const Chat = () => {
                 messages={messages}
                 typing={typing}
                 userTyping={userTyping}
+                isMessageLoading={isMessageLoading}
               />
 
               <Box

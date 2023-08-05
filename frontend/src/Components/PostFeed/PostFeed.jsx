@@ -40,6 +40,7 @@ const PostFeed = () => {
   const [isImageLoaded, setIsImageLoaded] = useState(false); // State to track image loading
   const [imageAdded, setImageAdded] = useState(false);
   const [isPostSending, setIsPostSending] = useState(false);
+  const [isPostGetting, setIsPostGetting] = useState(false);
 
   const { user } = useSelector((store) => store.AuthReducer);
   const theme = useTheme();
@@ -103,6 +104,7 @@ const PostFeed = () => {
   };
 
   const handleGetPosts = () => {
+    setIsPostGetting(true);
     const config = {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -112,9 +114,11 @@ const PostFeed = () => {
       .get(`${baseURL}/post`, config)
       .then((res) => {
         setPostItems(res.data);
+        setIsPostGetting(false);
         return res.data;
       })
       .catch((err) => {
+        setIsPostGetting(false);
         console.log(err);
       });
   };
@@ -328,7 +332,7 @@ const PostFeed = () => {
               </Button>
             </DialogActions>
           </Dialog>
-          {postItems &&
+          {postItems.length > 0 ? (
             postItems.map((post) => (
               <PostFeedItem
                 key={post._id}
@@ -336,7 +340,14 @@ const PostFeed = () => {
                 handleLikePost={handleLikePost}
                 setRefetchPost={setRefetchPost}
               />
-            ))}
+            ))
+          ) : isPostGetting ? (
+            <Box>
+              <CircularProgress size={24} />
+            </Box>
+          ) : (
+            <Box>No Posts</Box>
+          )}
         </Box>
         <Box className={style.setting_component}>
           <Setting />

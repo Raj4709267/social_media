@@ -9,7 +9,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Box, Divider, Paper, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  CircularProgress,
+  Divider,
+  Paper,
+  Typography,
+} from "@mui/material";
 import {
   clearChats,
   closeDrawer,
@@ -27,9 +34,10 @@ const Sidebar = ({ fromDrawer }) => {
   const [selectedMenu, setSelectedMenu] = useState("");
 
   const { user } = useSelector((store) => store.AuthReducer);
-  const { chats, activeChats, currentChat } = useSelector(
-    (store) => store.AppReducer
-  );
+  const { chats, activeChats, currentChat, hasDataLoaded, isChatsLoading } =
+    useSelector((store) => store.AppReducer);
+
+  console.log(isChatsLoading);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -165,6 +173,13 @@ const Sidebar = ({ fromDrawer }) => {
               </Box>
             );
           })
+        ) : isChatsLoading ? (
+          <Box>
+            <CircularProgress size={24} />
+            <Typography width={"80%"} margin={"auto"}>
+              It may take few second to load for the first time.
+            </Typography>
+          </Box>
         ) : (
           <Box>
             <Typography textAlign={"center"} fontWeight={"bold"}>

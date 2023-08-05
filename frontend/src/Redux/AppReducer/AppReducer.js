@@ -6,15 +6,30 @@ const initState = {
   activeChats: [],
   messages: [],
   isOpenDrawer: false,
+  hasDataLoaded: false,
+  isChatsLoading: false,
 };
 
 function AppReducer(state = initState, action) {
   const { type, payload } = action;
   switch (type) {
+    case types.GETCHAT_REQUEST: {
+      return { ...state, isChatsLoading: true };
+    }
     case types.GETCHAT_SUCCESS: {
       return {
         ...state,
         chats: payload,
+        hasDataLoaded: true,
+        isChatsLoading: false,
+      };
+    }
+    case types.GETCHAT_FAILURE: {
+      return {
+        ...state,
+        chats: [],
+        hasDataLoaded: true,
+        isChatsLoading: false,
       };
     }
     case types.SET_CURRENT_CHAT: {
