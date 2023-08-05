@@ -174,7 +174,7 @@ const Sidebar = ({ fromDrawer }) => {
             );
           })
         ) : isChatsLoading ? (
-          <Box>
+          <Box textAlign="center">
             <CircularProgress size={24} />
             <Typography width={"80%"} margin={"auto"}>
               It may take few second to load for the first time.
