@@ -37,7 +37,7 @@ The project is deployed and can be accessed at [deploed link](https://town-talk-
 - Real-time Messaging: Socket.io
 - Authentication: JWT | Bcrypt
 - Image storing: FireBase
-- 
+  
 
 ## Getting Started
 
