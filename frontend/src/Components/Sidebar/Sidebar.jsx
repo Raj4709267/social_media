@@ -177,7 +177,7 @@ const Sidebar = ({ fromDrawer }) => {
           <Box textAlign="center">
             <CircularProgress size={24} />
             <Typography width={"80%"} margin={"auto"}>
-              It may take few second to load for the first time.
+              It may take few seconds to load for the first time.
             </Typography>
           </Box>
         ) : (
