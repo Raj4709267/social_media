@@ -21,6 +21,19 @@ import { useTheme } from "@emotion/react";
 import ChatUI from "../../Components/ChatInput/ChatInput";
 import UserProfileModal from "../../Components/ProfileModal/ProfileModal";
 import Logo from "../../Components/Logo/Logo";
+// import { playSound } from "../../utils/Sound/Soundes";
+import { Howl } from "howler";
+
+const playSound = () => {
+  const sound = new Howl({
+    src: "../../utils/message-send.mp3", // Provide the path to your sound file
+    volume: 0.5, // Adjust the volume as needed
+  });
+  console.log("llllll");
+  sound.play();
+};
+
+// export { playSound };
 
 const Chat = () => {
   // const [message, setMessage] = useState("");
@@ -75,7 +88,7 @@ const Chat = () => {
       });
       getMessages(user.token, currentChat._id);
       setIsMessageSending(false);
-
+      playSound();
       // dispatch(getChatSuccess(res.data));
     } catch (err) {
       console.log(err);

@@ -49,7 +49,7 @@ const Authentication = () => {
         {currentPage === "signup" ? <SignUpForm /> : <SignInForm />}
       </Box>
 
-      <Box margin="12px 0">Or</Box>
+      {/* <Box margin="12px 0">Or</Box>
 
       <Box>
         <Button
@@ -66,7 +66,7 @@ const Authentication = () => {
         >
           Register with Google
         </Button>
-      </Box>
+      </Box> */}
       <Box
         width="100%"
         display={"flex"}

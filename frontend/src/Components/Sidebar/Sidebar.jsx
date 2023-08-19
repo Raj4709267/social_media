@@ -37,8 +37,6 @@ const Sidebar = ({ fromDrawer }) => {
   const { chats, activeChats, currentChat, hasDataLoaded, isChatsLoading } =
     useSelector((store) => store.AppReducer);
 
-  console.log(isChatsLoading);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();

@@ -5,7 +5,6 @@ import { useTheme } from "@emotion/react";
 const Logo = () => {
   const theme = useTheme();
   const isLightTheme = theme.palette.mode === "light"; // Check if the theme is light
-  console.log(theme.palette);
   const textShadowStyle = {
     textShadow: isLightTheme
       ? "1px 1px 2px rgba(0, 0, 0, 0.2)" // Light shadow for light theme
