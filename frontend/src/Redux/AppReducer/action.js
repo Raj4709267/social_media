@@ -1,6 +1,9 @@
 import axios from "axios";
 import * as types from "./actionTypes";
 import { baseURL } from "../../Config/CommonConfig";
+import { toast } from "react-toastify";
+import { getFirstName } from "../../utils/commonFun/getFirstName";
+import { getFriendDetailsFromChat } from "../../utils/commonFun/getFriendDetailsFromChat";
 
 const setCurrentChat = (payload) => {
   return {
@@ -107,11 +110,47 @@ const sendMessage = (token, payload) => async (dispatch) => {
   };
   try {
     let res = await axios.get(`${baseURL}/message/send`, payload, config);
-    console.log(res.data);
+    // console.log(res.data);
+    console.log("message sent");
     // dispatch(getChatSuccess(res.data));
   } catch (err) {
     console.log(err);
   }
+};
+
+const showNotification = (recivedMessage) => (dispatch, getState) => {
+  const state = getState();
+
+  const currentChatId = state?.AppReducer?.currentChat?._id;
+  const chatIdFromSocket = recivedMessage?.content?.chat?._id;
+  const token = state?.AuthReducer?.user?.token;
+  if (currentChatId === chatIdFromSocket) {
+    dispatch({ type: types.RECIVED_MESSAGE, payload: recivedMessage.content });
+    dispatch(getAllChats(token));
+  } else {
+    const user = state?.AuthReducer?.user;
+    const chats = state?.AppReducer?.chats?.filter(
+      (item) => item._id === chatIdFromSocket
+    );
+
+    const friendDetails = getFriendDetailsFromChat(chats[0]?.users, user);
+    console.log(friendDetails);
+    // console.log(state);
+    dispatch(getAllChats(token));
+    message(getFirstName(friendDetails?.name));
+  }
+};
+
+const message = (name) => {
+  toast(`🦄 Message from ${name} `, {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 };
 
 export {
@@ -127,4 +166,5 @@ export {
   sendMessage,
   openDrawer,
   closeDrawer,
+  showNotification,
 };

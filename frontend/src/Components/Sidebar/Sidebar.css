@@ -142,6 +142,11 @@
     display: none;
 }
 
+.message_notification {
+    width: 5px;
+    height: 5px;
+    color: red;
+}
 
 @media (min-width: 20px) and (max-width: 1250px) {
     .sidebar-menus-container>a:nth-child(2) {

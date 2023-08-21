@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { baseURL } from "../../Config/CommonConfig";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllChats, setActiveChats } from "../../Redux/AppReducer/action";
+import {
+  getAllChats,
+  setActiveChats,
+  showNotification,
+} from "../../Redux/AppReducer/action";
 import socket from "../../Config/socketio";
 import { getFriendDetailsFromChat } from "../../utils/commonFun/getFriendDetailsFromChat";
 import axios from "axios";
@@ -23,13 +27,15 @@ import UserProfileModal from "../../Components/ProfileModal/ProfileModal";
 import Logo from "../../Components/Logo/Logo";
 // import { playSound } from "../../utils/Sound/Soundes";
 import { Howl } from "howler";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const playSound = () => {
   const sound = new Howl({
     src: "../../utils/message-send.mp3", // Provide the path to your sound file
     volume: 0.5, // Adjust the volume as needed
   });
-  console.log("llllll");
   sound.play();
 };
 
@@ -38,14 +44,16 @@ const playSound = () => {
 const Chat = () => {
   // const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [socketConnected, setSocketConnected] = useState(false);
+  // const [socketConnected, setSocketConnected] = useState(false);
   const [isMessageSending, setIsMessageSending] = useState(false);
   const [isMessageLoading, setIsMessageLoading] = useState(false);
   const [typing, setTyping] = useState(false);
   const [userTyping, setUserTyping] = useState("");
   const [showProfileModal, setShowProfileModal] = useState(false);
+  // const [newMessage, setNewMessage] = useState(null);
 
-  const { currentChat, activeChats } = useSelector((store) => store.AppReducer);
+  const { currentChat, activeChats, newMessageRecived, isSocketConnected } =
+    useSelector((store) => store.AppReducer);
   const { user } = useSelector((store) => store.AuthReducer);
   const dispatch = useDispatch();
   const currentChatIdRef = useRef(currentChat._id);
@@ -53,11 +61,9 @@ const Chat = () => {
   const theme = useTheme();
   const timeoutRef = useRef(null);
 
-  // const currentChatId = useParams().id;
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
 
   const handleSendMessage = async (message, imageUrl) => {
     // event.preventDefault();
@@ -78,15 +84,17 @@ const Chat = () => {
     };
     try {
       let res = await axios.post(`${baseURL}/message/send`, payload, config);
+      dispatch(getAllChats(user.token));
+      setMessages([...messages, res.data]);
       socket.emit("new message", {
         content: res.data,
         userId: getFriendDetailsFromChat(currentChat.users, user)._id,
       });
-      console.log("sending to", {
-        content: res.data,
-        userId: getFriendDetailsFromChat(currentChat.users, user)._id,
-      });
-      getMessages(user.token, currentChat._id);
+      // console.log("sending to", {
+      //   content: res.data,
+      //   userId: getFriendDetailsFromChat(currentChat.users, user)._id,
+      // });
+      // getMessages(user.token, currentChat._id);
       setIsMessageSending(false);
       playSound();
       // dispatch(getChatSuccess(res.data));
@@ -105,12 +113,12 @@ const Chat = () => {
     };
     try {
       let res = await axios.get(`${baseURL}/message/${chatId}`, config);
+      // console.log(res.data);
       dispatch(getAllChats(user.token));
       setMessages(res.data);
       setIsMessageSending(false);
       setIsMessageLoading(false);
     } catch (err) {
-      console.log(err);
       setIsMessageLoading(false);
       setIsMessageSending(false);
     }
@@ -140,6 +148,18 @@ const Chat = () => {
     setShowProfileModal(true);
   };
 
+  const notify = () =>
+    toast("🦄 Wow so easy!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
   // useEffect(() => {
   //   socket.on("getActiveUsers", (activeUsers) => {
   //     setSocketConnected(true);
@@ -150,61 +170,100 @@ const Chat = () => {
   // }, [socket]);
 
   useEffect(() => {
-    console.log("seggingglksdl");
-    console.log(socket.connected);
-    socket.emit("setup", user);
-
-    // socket.on("recived message", (kk) => {
-    //   console.log("message");
-    // });
-
-    socket.on("getActiveUsers", (activeUsers) => {
-      console.log(user.userId);
-      console.log("activeUsers", activeUsers);
-      const activeIds = activeUsers.map((item) => item.userId);
-      dispatch(setActiveChats(activeIds));
-    });
+    console.log("chat component rungin -------------------");
   }, []);
 
   useEffect(() => {
     currentChatIdRef.current = currentChat._id;
+    console.log(currentChat);
     setMessages([]);
   }, [currentChat]);
 
   useEffect(() => {
-    socket.on("recived message", (messageFromS) => {
-      console.log("from message", currentChatIdRef.current);
+    if (!isSocketConnected) {
+      dispatch({ type: "SOCKET_CONNECTED" });
 
-      if (currentChatIdRef.current === messageFromS?.content?.chat?._id) {
-        console.log("onw");
-        getMessages(user.token, messageFromS.content.chat._id);
-      } else {
-        console.log("two");
-        dispatch(getAllChats(user.token));
+      socket.emit("setup", user);
+
+      // socket.on("recived message", (kk) => {
+      //   console.log("message");
+      // });
+
+      socket.on("getActiveUsers", (activeUsers) => {
+        const activeIds = activeUsers.map((item) => item.userId);
+        dispatch(setActiveChats(activeIds));
+      });
+
+      socket.on("userTyping", (toUserId) => {
+        setTyping(true);
+        setUserTyping(toUserId);
+      });
+
+      socket.on("userStoppedTyping", (toUserId) => {
+        setTyping(false);
+        setUserTyping(toUserId);
+      });
+
+      socket.on("recived message", (messageFromS) => {
+        // const currentChatConst = currentChatIdRef.current;
+        // console.log("current chat", currentChatConst);
+        // console.log("current", currentChat);
+
+        // if (currentChatIdRef.current === messageFromS?.content?.chat?._id) {
+        //   dispatch({ type: "RECIVED_MESSAGE", payload: messageFromS.content });
+        // } else {
+        console.log("redicvealkdjflja ");
+        dispatch(showNotification(messageFromS));
+
+        // }
+        // getMessages(user.token, messageFromS.content.chat._id);
+        // dispatch(getAllChats(user.token));
+
+        // setNewMessage(messageFromS.content);
+
+        //   console.log("onw");
+        // } else {
+        //   console.log("two");
+        //   // notify();
+        //   dispatch(getAllChats(user.token));
+        // }
+      });
+    }
+    // return () => {
+    //   // Clean up the socket event listeners when the component unmounts
+    //   socket.off("getActiveUsers");
+    //   socket.off("recived message");
+    //   socket.off("userTyping");
+    //   socket.off("userStoppedTyping");
+    //   // Other socket event listeners...
+    // };
+  }, []);
+
+  useEffect(() => {
+    // console.log("from message", currentChatIdRef.current);
+    if (currentChatIdRef.current === newMessageRecived?.chat?._id) {
+      if (newMessageRecived) {
+        setMessages([...messages, newMessageRecived]);
       }
-    });
+    }
+    //  else {
+    //   notify();
+    //   dispatch(getAllChats(user.token));
+    // }
+  }, [newMessageRecived]);
 
-    socket.on("userTyping", (toUserId) => {
-      console.log("typing");
-      setTyping(true);
-      setUserTyping(toUserId);
-    });
+  // useEffect(() => {
 
-    socket.on("userStoppedTyping", (toUserId) => {
-      setTyping(false);
-      setUserTyping(toUserId);
-    });
-  }, [socket]);
+  // }, []);
 
   useEffect(() => {
     if (currentChat._id) {
-      console.log(activeChats.includes(friendDetails._id));
       getMessages(user.token, currentChat._id);
     }
   }, [currentChat]);
 
   return (
-    <div>
+    <div className={style.main_container}>
       {currentChat._id ? (
         <>
           <Box className={style.chat_container_main}>

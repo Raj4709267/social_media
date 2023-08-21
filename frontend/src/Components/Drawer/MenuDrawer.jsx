@@ -12,9 +12,7 @@ const MenuDrawer = () => {
   // const toggleDrawer = (value) => {
   //   setOpen(value);
   // };\
-  useEffect(() => {
-    console.log("collingina df");
-  }, []);
+
   const dispatch = useDispatch();
   const { isOpenDrawer } = useSelector((store) => store.AppReducer);
   return (

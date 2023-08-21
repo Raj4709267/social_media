@@ -10,3 +10,4 @@ export const CLEAR_CHAT = "CLEAR_CHAT";
 export const LOGOUT = "LOGOUT";
 export const OPEN_DRAWER = "OPEN_DRAWER";
 export const CLOSE_DRAWER = "CLOSE_DRAWER";
+export const RECIVED_MESSAGE = "RECIVED_MESSAGE";

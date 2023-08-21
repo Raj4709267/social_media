@@ -59,7 +59,7 @@ const PostFeedItem = ({ post, handleLikePost, setRefetchPost, fromModal }) => {
     axios
       .post(`${baseURL}/post/like`, payload, config)
       .then((res) => {
-        console.log(res);
+        console.log("post liked");
       })
       .catch((err) => {
         console.log(err);
@@ -76,7 +76,7 @@ const PostFeedItem = ({ post, handleLikePost, setRefetchPost, fromModal }) => {
     axios
       .post(`${baseURL}/post/delete`, payload, config)
       .then((res) => {
-        console.log(res);
+        console.log("post deleted");
         setRefetchPost((pre) => !pre);
       })
       .catch((err) => {

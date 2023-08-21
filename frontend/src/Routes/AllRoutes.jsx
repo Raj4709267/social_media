@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import Authentication from "../pages/Authentication/Authentication";
 import Setting from "../pages/Setting/Setting";
-import Welcome from "../pages/Welcome/Welcome";
 
 const AllRoutes = () => {
   const { isAuth } = useSelector((store) => store.AuthReducer);

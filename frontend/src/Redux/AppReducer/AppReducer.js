@@ -8,6 +8,8 @@ const initState = {
   isOpenDrawer: false,
   hasDataLoaded: false,
   isChatsLoading: false,
+  newMessageRecived: null,
+  isSocketConnected: false,
 };
 
 function AppReducer(state = initState, action) {
@@ -73,6 +75,18 @@ function AppReducer(state = initState, action) {
       return {
         ...state,
         isOpenDrawer: false,
+      };
+    }
+    case types.RECIVED_MESSAGE: {
+      return {
+        ...state,
+        newMessageRecived: payload,
+      };
+    }
+    case "SOCKET_CONNECTED": {
+      return {
+        ...state,
+        isSocketConnected: true,
       };
     }
     default:

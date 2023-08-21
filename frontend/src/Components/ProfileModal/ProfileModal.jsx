@@ -95,7 +95,6 @@ const UserProfileModal = ({ user, open, onClose }) => {
     axios
       .post(`${baseURL}/users/update`, payload, config)
       .then((res) => {
-        console.log(res);
         const userData = JSON.parse(
           localStorage.getItem("chatapp_user_details")
         );
@@ -104,7 +103,6 @@ const UserProfileModal = ({ user, open, onClose }) => {
         if (userData && avatarImage) {
           // Update the avatar field with the new image URL
           userData.avatar = avatarImage;
-          console.log(userData);
           dispatch({ type: "UPDATE_USER", payload: userData });
           // Store the updated user data back in localStorage
           localStorage.setItem(

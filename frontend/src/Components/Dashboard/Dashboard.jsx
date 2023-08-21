@@ -8,9 +8,7 @@ const Dashboard = () => {
     // Here, you can implement the logic to send the post content and image to your backend server or wherever you want to store the posts.
     axios
       .post(`${baseURL}/post`, post)
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });

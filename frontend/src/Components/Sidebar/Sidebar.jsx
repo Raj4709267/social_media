@@ -71,7 +71,6 @@ const Sidebar = ({ fromDrawer }) => {
 
   useEffect(() => {
     if (!fromDrawer) {
-      console.log("get users");
       dispatch(getAllChats(user.token));
     }
   }, [activeChats]);
@@ -101,6 +100,7 @@ const Sidebar = ({ fromDrawer }) => {
                     : "single-message-box"
                 }
                 onClick={() => {
+                  // socket.emit("open chat");
                   handleSingleChat(item);
                   setSelectedMenu("");
                   dispatch(closeDrawer());
@@ -168,6 +168,7 @@ const Sidebar = ({ fromDrawer }) => {
                     {getLimitedText(item.latestMessage?.content, 20)}
                   </Typography>
                 </Box>
+                {/* <IoEllipse color="#ff0808" size={"1.3rem"} /> */}
               </Box>
             );
           })

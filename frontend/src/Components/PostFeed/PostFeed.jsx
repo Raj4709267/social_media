@@ -176,7 +176,6 @@ const PostFeed = () => {
   useEffect(() => {
     handleGetPosts();
   }, [refetchPost]);
-  console.log(theme.palette);
   return (
     <>
       <Box className={style.chat_container}>

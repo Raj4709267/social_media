@@ -73,7 +73,7 @@ const ChatBox = ({ messages, typing, userTyping, isMessageLoading }) => {
       {messages.length > 0 ? (
         messages.map((message, index) => (
           <Box key={index}>
-            {message.image && (
+            {message?.image && (
               <Box
                 key={index}
                 sx={{

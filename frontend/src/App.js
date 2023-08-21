@@ -10,6 +10,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { ThemeContext } from "./Context/SettingContext";
 import getThemeAndColor from "./Theme/getThemeAndColor";
 import Setting from "./pages/Setting/Setting";
+import { ToastContainer } from "react-toastify";
 
 // const lightTheme = createTheme(themes.light);
 // const darkTheme = createTheme(themes.dark);
@@ -42,6 +43,18 @@ function App() {
           {isAuth ? <Navbar /> : null}
           <Box className="main-body-container">
             <AllRoutes />
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme={dark ? "dark" : "light"}
+            />
           </Box>
         </Box>
       </Box>
