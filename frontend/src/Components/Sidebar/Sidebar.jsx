@@ -4,7 +4,9 @@ import {
   IoChatbubbleEllipsesSharp,
   IoSettingsSharp,
   IoEllipse,
+  IoImages,
 } from "react-icons/io5";
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
@@ -36,10 +38,12 @@ const Sidebar = ({ fromDrawer }) => {
   const { user } = useSelector((store) => store.AuthReducer);
   const { chats, activeChats, currentChat, hasDataLoaded, isChatsLoading } =
     useSelector((store) => store.AppReducer);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const theme = useTheme();
+  useEffect(() => {
+    console.log(chats);
+  }, [chats]);
   const optionsMenus = [
     {
       name: "Feed",
@@ -64,7 +68,15 @@ const Sidebar = ({ fromDrawer }) => {
   ];
 
   const handleSingleChat = (item) => {
-    // socket.emit("open chat", item._id, user.userId);
+    if (item._id === currentChat._id) {
+      return;
+    }
+    const newChats = chats.map((chat) => ({
+      ...chat,
+      unreadCount: chat._id === item._id ? 0 : chat.unreadCount,
+    }));
+    dispatch({ type: "GETCHAT_SUCCESS", payload: newChats });
+    socket.emit("open chat", item._id, user.userId);
     dispatch(setCurrentChat(item));
     navigate(`/chat/${item._id}`);
   };
@@ -165,10 +177,57 @@ const Sidebar = ({ fromDrawer }) => {
                     )} */}
                   </Box>
                   <Typography fontSize={"12px"}>
-                    {getLimitedText(item.latestMessage?.content, 20)}
+                    {/* {item?.latestMessage?.sender?._id === user.userId && "You-"} */}
+                    {!item?.latestMessage?.content &&
+                    item?.latestMessage?.image ? (
+                      <>
+                        <IoImages /> <span>Photo</span>
+                      </>
+                    ) : (
+                      getLimitedText(item.latestMessage?.content, 20)
+                    )}
                   </Typography>
                 </Box>
-                {/* <IoEllipse color="#ff0808" size={"1.3rem"} /> */}
+                {item.unreadCount &&
+                item?.latestMessage?.sender?._id !== user.userId ? (
+                  // <IoEllipse color="#ff0808" size={"1.3rem"} />
+                  <Box>
+                    <div
+                      style={{
+                        borderRadius: "50%",
+                        height: "1.15rem",
+                        width: "1.15rem",
+                        background: "#ff0808",
+                        fontSize: "14px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        color: "white",
+                      }}
+                    >
+                      {item.unreadCount > 9 ? "9+" : item.unreadCount}
+                    </div>
+                  </Box>
+                ) : null}
+                {/* {!item.latestMessage && (
+                  <Box>
+                    <div
+                      style={{
+                        borderRadius: "50%",
+                        // height: "1.15rem",
+                        // width: "1.15rem",
+                        color: "#ff0808",
+                        fontSize: "14px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        // color: "white",
+                      }}
+                    >
+                      New
+                    </div>
+                  </Box>
+                )} */}
               </Box>
             );
           })

@@ -12,6 +12,7 @@ import { getFormatedDate } from "../../utils/commonFun/getFormatedDate";
 import { HiLockClosed } from "react-icons/hi2";
 import { getFirstName } from "../../utils/commonFun/getFirstName";
 import { getFriendDetailsFromChat } from "../../utils/commonFun/getFriendDetailsFromChat";
+import { BiCheckDouble } from "react-icons/bi";
 
 const ChatBox = ({ messages, typing, userTyping, isMessageLoading }) => {
   const [hoveredId, setHoveredId] = useState(null);
@@ -42,6 +43,16 @@ const ChatBox = ({ messages, typing, userTyping, isMessageLoading }) => {
     // };
   }, [messages, typing]);
 
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const scrollTop = containerRef.current.scrollTop;
+      if (scrollTop === 0) {
+        // Call your function here when the user reaches the top
+        console.log("Reached the top of the chat container");
+      }
+    }
+  };
+
   return (
     <Box
       ref={containerRef}
@@ -52,6 +63,7 @@ const ChatBox = ({ messages, typing, userTyping, isMessageLoading }) => {
         padding: "10px",
         borderRadius: "5px",
       }}
+      onScroll={handleScroll}
     >
       <Box
         backgroundColor="#fef1bd"
@@ -163,9 +175,16 @@ const ChatBox = ({ messages, typing, userTyping, isMessageLoading }) => {
                       wordWrap: "break-word", // Allow words to break and wrap onto the next line
                       whiteSpace: "pre-wrap", // Preserve whitespace and line breaks
                       textAlign: "left",
+                      // display: "flex",
+                      // // justifyContent: "center",
+                      // alignItems: "flex-end",
+                      // gap: "4px",
                     }}
                   >
                     {message.content}
+                    {/* {message.sender._id === user.userId && (
+                      <BiCheckDouble color="#57a8ec" />
+                    )} */}
                   </Typography>
                 </Paper>
               )}

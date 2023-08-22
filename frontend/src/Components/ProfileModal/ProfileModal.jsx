@@ -45,6 +45,26 @@ const UserProfileModal = ({ user, open, onClose }) => {
   const dispatch = useDispatch();
   const profileUser = useSelector((store) => store.AuthReducer.user);
 
+  // const [selectedImage, setSelectedImage] = useState(null);
+  // console.log(selectedImage);
+  // const handleImageUpload = async (event) => {
+  //   const file = event.target.files[0];
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("upload_preset", "mvxhhqat"); // Replace with your Cloudinary upload preset
+
+  //   try {
+  //     const response = await axios.post(
+  //       "https://api.cloudinary.com/v1_1/de1qylaxf/image/upload",
+  //       formData
+  //     );
+
+  //     setSelectedImage(response.data.secure_url);
+  //   } catch (error) {
+  //     console.error("Error uploading image:", error);
+  //   }
+  // };
+
   const handleImageLoad = () => {
     setImageLoaded(true);
     setShowLoading(false);
@@ -189,7 +209,7 @@ const UserProfileModal = ({ user, open, onClose }) => {
             />
             {profileUser.userId === user.userId && (
               <label htmlFor="avatar-upload">
-                <Button variant="contained" component="span">
+                <Button variant="text" component="span">
                   Change Avatar
                 </Button>
               </label>
@@ -220,7 +240,7 @@ const UserProfileModal = ({ user, open, onClose }) => {
             {profileUser.userId === user.userId && (
               <Box textAlign={"right"}>
                 <Button
-                  variant="contained"
+                  variant="text"
                   disabled={uploadPercent < 100 || !avatarImage || showLoading}
                   onClick={handleUpdateChange}
                 >

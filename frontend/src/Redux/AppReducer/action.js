@@ -12,12 +12,12 @@ const setCurrentChat = (payload) => {
   };
 };
 
-const setCurrentMessages = (payload) => {
-  return {
-    type: types.GETCHAT_SUCCESS,
-    payload,
-  };
-};
+// const setCurrentMessages = (payload) => {
+//   return {
+//     type: types.GETCHAT_SUCCESS,
+//     payload,
+//   };
+// };
 
 const getChatSuccess = (payload) => {
   return {
@@ -156,7 +156,7 @@ const message = (name) => {
 export {
   getChatSuccess,
   setCurrentChat,
-  setCurrentMessages,
+  // setCurrentMessages,
   clearChats,
   clearData,
   createChat,

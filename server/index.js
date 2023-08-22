@@ -103,33 +103,38 @@ io.on("connection", (socket) => {
     }
   });
 
-  // socket.on("open chat", async (chatId, userId) => {
-  //   try {
-  //     // Find all unread messages in the specified chat for the current user
-  //     const unreadMessages = await MessageModel.find({
-  //       chat: chatId,
-  //       sender: { $ne: userId }, // Exclude user's own messages
-  //       unRead: true,
-  //     });
+  socket.on("open chat", async (chatId, userId) => {
+    try {
+      // Find all unread messages in the specified chat for the current user
+      const unreadMessages = await MessageModel.find({
+        chat: chatId,
+        sender: { $ne: userId },
+        unRead: true,
+      });
 
-  //     // Mark all unread messages as read
-  //     for (const message of unreadMessages) {
-  //       message.unRead = false;
-  //       await message.save();
-  //     }
+      if (unreadMessages.length === 0) {
+        return; // No unread messages to mark as read
+      }
 
-  //     // Update the latestMessage field in the chat
-  //     await ChatModel.findByIdAndUpdate(chatId, {
-  //       latestMessage: unreadMessages[unreadMessages.length - 1]._id,
-  //     });
+      // Mark all unread messages as read
+      await MessageModel.updateMany(
+        { _id: { $in: unreadMessages.map((msg) => msg._id) } },
+        { $set: { unRead: false } }
+      );
 
-  //     // Emit an event to notify the user that messages have been marked as read
-  //     socket.emit("messages marked as read");
-  //   } catch (error) {
-  //     // Handle errors
-  //     console.error("Error marking messages as read:", error);
-  //   }
-  // });
+      // Update the latestMessage field in the chat
+      const latestMessageId = unreadMessages[unreadMessages.length - 1]._id;
+      await ChatModel.findByIdAndUpdate(chatId, {
+        latestMessage: latestMessageId,
+      });
+
+      // Emit an event to notify the user that messages have been marked as read
+      socket.emit("messages marked as read");
+    } catch (error) {
+      // Handle errors
+      console.error("Error marking messages as read:", error);
+    }
+  });
 
   //when user logout manually;
   socket.on("logout", () => {

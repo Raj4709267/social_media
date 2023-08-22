@@ -10,7 +10,7 @@ const messageSchema = mongoose.Schema(
     content: { type: String, trim: true, require: true },
     image: { type: String, trim: true, require: true },
     chat: { type: mongoose.Schema.Types.ObjectId, ref: "chat", require: true },
-    unRead: { type: Boolean, require: true },
+    unRead: { type: Boolean, require: true, default: true },
   },
   { timestamps: true }
 );

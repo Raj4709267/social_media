@@ -1,4 +1,5 @@
 const { ChatModel } = require("../Model/chatModel");
+const { MessageModel } = require("../Model/messageModel");
 const { UserModel } = require("../Model/userModel");
 
 const createChat = async (req, res) => {
@@ -31,7 +32,6 @@ const createChat = async (req, res) => {
     }
   }
 };
-
 const getChats = async (req, res) => {
   try {
     ChatModel.find({ users: { $elemMatch: { $eq: req.body.userId } } })
@@ -41,13 +41,26 @@ const getChats = async (req, res) => {
       .then(async (results) => {
         results = await UserModel.populate(results, {
           path: "latestMessage.sender",
-          select: "name avatart email",
+          select: "name avatar email",
         });
-        res.status(200).send(results);
+
+        // Fetch the unread message count for each chat
+        const updatedResults = await Promise.all(
+          results.map(async (chat) => {
+            const unreadCount = await MessageModel.countDocuments({
+              chat: chat._id,
+              unRead: true,
+            });
+            return { ...chat._doc, unreadCount };
+          })
+        );
+
+        res.status(200).send(updatedResults);
       });
   } catch (error) {
     res.status(400);
     throw new Error(error.message);
   }
 };
+
 module.exports = { createChat, getChats };

@@ -11,14 +11,7 @@ import socket from "../../Config/socketio";
 import { getFriendDetailsFromChat } from "../../utils/commonFun/getFriendDetailsFromChat";
 import axios from "axios";
 import ChatBox from "../../Components/ChatBox/ChatBox";
-import {
-  Avatar,
-  Box,
-  Button,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Paper, Typography } from "@mui/material";
 import { getFormantedName } from "../../utils/commonFun/getFormatedName";
 import style from "./Chat.module.css";
 import { useTheme } from "@emotion/react";
@@ -27,8 +20,6 @@ import UserProfileModal from "../../Components/ProfileModal/ProfileModal";
 import Logo from "../../Components/Logo/Logo";
 // import { playSound } from "../../utils/Sound/Soundes";
 import { Howl } from "howler";
-import { ToastContainer, toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
 
 const playSound = () => {
@@ -114,7 +105,7 @@ const Chat = () => {
     try {
       let res = await axios.get(`${baseURL}/message/${chatId}`, config);
       // console.log(res.data);
-      dispatch(getAllChats(user.token));
+      // dispatch(getAllChats(user.token));
       setMessages(res.data);
       setIsMessageSending(false);
       setIsMessageLoading(false);
@@ -148,34 +139,8 @@ const Chat = () => {
     setShowProfileModal(true);
   };
 
-  const notify = () =>
-    toast("🦄 Wow so easy!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
-  // useEffect(() => {
-  //   socket.on("getActiveUsers", (activeUsers) => {
-  //     setSocketConnected(true);
-  //     console.log(activeUsers);
-  //     const activeIds = activeUsers.map((item) => item);
-  //     dispatch(setActiveChats(activeIds));
-  //   });
-  // }, [socket]);
-
-  useEffect(() => {
-    console.log("chat component rungin -------------------");
-  }, []);
-
   useEffect(() => {
     currentChatIdRef.current = currentChat._id;
-    console.log(currentChat);
     setMessages([]);
   }, [currentChat]);
 
@@ -184,10 +149,6 @@ const Chat = () => {
       dispatch({ type: "SOCKET_CONNECTED" });
 
       socket.emit("setup", user);
-
-      // socket.on("recived message", (kk) => {
-      //   console.log("message");
-      // });
 
       socket.on("getActiveUsers", (activeUsers) => {
         const activeIds = activeUsers.map((item) => item.userId);
@@ -205,56 +166,19 @@ const Chat = () => {
       });
 
       socket.on("recived message", (messageFromS) => {
-        // const currentChatConst = currentChatIdRef.current;
-        // console.log("current chat", currentChatConst);
-        // console.log("current", currentChat);
-
-        // if (currentChatIdRef.current === messageFromS?.content?.chat?._id) {
-        //   dispatch({ type: "RECIVED_MESSAGE", payload: messageFromS.content });
-        // } else {
-        console.log("redicvealkdjflja ");
         dispatch(showNotification(messageFromS));
-
-        // }
-        // getMessages(user.token, messageFromS.content.chat._id);
-        // dispatch(getAllChats(user.token));
-
-        // setNewMessage(messageFromS.content);
-
-        //   console.log("onw");
-        // } else {
-        //   console.log("two");
-        //   // notify();
-        //   dispatch(getAllChats(user.token));
-        // }
       });
     }
-    // return () => {
-    //   // Clean up the socket event listeners when the component unmounts
-    //   socket.off("getActiveUsers");
-    //   socket.off("recived message");
-    //   socket.off("userTyping");
-    //   socket.off("userStoppedTyping");
-    //   // Other socket event listeners...
-    // };
   }, []);
 
   useEffect(() => {
-    // console.log("from message", currentChatIdRef.current);
     if (currentChatIdRef.current === newMessageRecived?.chat?._id) {
       if (newMessageRecived) {
         setMessages([...messages, newMessageRecived]);
+        socket.emit("open chat", currentChatIdRef.current, user.userId);
       }
     }
-    //  else {
-    //   notify();
-    //   dispatch(getAllChats(user.token));
-    // }
   }, [newMessageRecived]);
-
-  // useEffect(() => {
-
-  // }, []);
 
   useEffect(() => {
     if (currentChat._id) {
